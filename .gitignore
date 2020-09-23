@@ -1,8 +1,10 @@
 .idea/
 target/
+.mvn/
+mvnw*
 
 # Compiled class file
-*.class
+*.classgigi
 
 # Log file
 *.log
