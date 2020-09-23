@@ -1,4 +1,4 @@
-package com.atguigu.gmall.pms.controller;
+package com.atguigu.gmall.wms.controller;
 
 import java.util.List;
 
@@ -14,60 +14,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.atguigu.gmall.pms.entity.AttrGroupEntity;
-import com.atguigu.gmall.pms.service.AttrGroupService;
+import com.atguigu.gmall.wms.entity.WareSkuEntity;
+import com.atguigu.gmall.wms.service.WareSkuService;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.common.bean.PageParamVo;
 
 /**
- * 属性分组
+ * 商品库存
  *
  * @author langD
  * @email langD@atguigu.com
- * @date 2020-09-21 20:11:35
+ * @date 2020-09-23 11:36:24
  */
-@Api(tags = "属性分组 管理")
+@Api(tags = "商品库存 管理")
 @RestController
-@RequestMapping("pms/attrgroup")
-public class AttrGroupController {
+@RequestMapping("wms/waresku")
+public class WareSkuController {
 
     @Autowired
-    private AttrGroupService attrGroupService;
+    private WareSkuService wareSkuService;
 
-    @GetMapping("withattrs/{catId}")
-    public ResponseVo<List<AttrGroupEntity>> queryGroupsWithAttrsByCid(@PathVariable("catId")Long cid){
-        List<AttrGroupEntity> attrGroupEntities = this.attrGroupService.queryGroupsWithAttrsByCid(cid);
-        return ResponseVo.ok(attrGroupEntities);
+    @GetMapping("sku/{skuId}")
+    public ResponseVo<List<WareSkuEntity>> queryWareSkuBySkuId(@PathVariable("skuId")Long skuId){
+        List<WareSkuEntity> wareSkuEntities = this.wareSkuService.list(new QueryWrapper<WareSkuEntity>().eq("sku_id", skuId));
+        return ResponseVo.ok(wareSkuEntities);
     }
-
-    @GetMapping("category/{cid}")
-    public ResponseVo<List<AttrGroupEntity>> queryGroupsBycid(@PathVariable("cid")Long cid){
-        List<AttrGroupEntity> groupEntities = this.attrGroupService.list(new QueryWrapper<AttrGroupEntity>().eq("category_id",cid));
-        return ResponseVo.ok(groupEntities);
-    }
-
 
     /**
      * 列表
      */
     @GetMapping
     @ApiOperation("分页查询")
-    public ResponseVo<PageResultVo> queryAttrGroupByPage(PageParamVo paramVo){
-        PageResultVo pageResultVo = attrGroupService.queryPage(paramVo);
+    public ResponseVo<PageResultVo> queryWareSkuByPage(PageParamVo paramVo){
+        PageResultVo pageResultVo = wareSkuService.queryPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
     }
+
 
     /**
      * 信息
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")
-    public ResponseVo<AttrGroupEntity> queryAttrGroupById(@PathVariable("id") Long id){
-		AttrGroupEntity attrGroup = attrGroupService.getById(id);
+    public ResponseVo<WareSkuEntity> queryWareSkuById(@PathVariable("id") Long id){
+		WareSkuEntity wareSku = wareSkuService.getById(id);
 
-        return ResponseVo.ok(attrGroup);
+        return ResponseVo.ok(wareSku);
     }
 
     /**
@@ -75,8 +69,8 @@ public class AttrGroupController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.save(attrGroup);
+    public ResponseVo<Object> save(@RequestBody WareSkuEntity wareSku){
+		wareSkuService.save(wareSku);
 
         return ResponseVo.ok();
     }
@@ -86,8 +80,8 @@ public class AttrGroupController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public ResponseVo update(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.updateById(attrGroup);
+    public ResponseVo update(@RequestBody WareSkuEntity wareSku){
+		wareSkuService.updateById(wareSku);
 
         return ResponseVo.ok();
     }
@@ -98,7 +92,7 @@ public class AttrGroupController {
     @PostMapping("/delete")
     @ApiOperation("删除")
     public ResponseVo delete(@RequestBody List<Long> ids){
-		attrGroupService.removeByIds(ids);
+		wareSkuService.removeByIds(ids);
 
         return ResponseVo.ok();
     }

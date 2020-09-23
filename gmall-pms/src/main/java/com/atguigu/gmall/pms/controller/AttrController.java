@@ -35,6 +35,22 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+    @GetMapping("category/{cid}")
+    public ResponseVo<List<AttrEntity>> queryAttrsByGidAndTypeOrSearchType(
+            @PathVariable("cid")Long cid,
+            @RequestParam(value = "type",required = false)Integer type,
+            @RequestParam(value = "searchType",required = false)Integer searchType){
+        QueryWrapper<AttrEntity> wrapper = new QueryWrapper<AttrEntity>().eq("category_id", cid);
+        if(type != null){
+            wrapper.eq("type", type);
+        }
+        if (searchType != null){
+            wrapper.eq("search_type", searchType);
+        }
+        List<AttrEntity> attrEntities = this.attrService.list(wrapper);
+        return ResponseVo.ok(attrEntities);
+    }
+
     @GetMapping("group/{gid}")
     public ResponseVo<List<AttrEntity>> queryAttrsByGid(@PathVariable("gid")Long gid){
         List<AttrEntity> attrEntities = this.attrService.list(new QueryWrapper<AttrEntity>().eq("group_id", gid));

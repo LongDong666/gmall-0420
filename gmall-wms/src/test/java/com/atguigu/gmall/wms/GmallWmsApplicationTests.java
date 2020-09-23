@@ -1,4 +1,4 @@
-package com.guigu.gmall.wms;
+package com.atguigu.gmall.wms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
