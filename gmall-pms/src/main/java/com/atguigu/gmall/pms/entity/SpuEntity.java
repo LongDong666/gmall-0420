@@ -45,12 +45,10 @@ public class SpuEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 
 }
