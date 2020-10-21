@@ -1,5 +1,6 @@
 package com.atguigu.gmall.pms.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.atguigu.gmall.pms.vo.SpuVo;
@@ -41,6 +42,14 @@ public class SpuController {
         return ResponseVo.ok(resultVo);
     }
 
+    @PostMapping("json")
+    public ResponseVo<List<SpuEntity>> querySpuByPageJson(@RequestBody PageParamVo paramVo){
+        PageResultVo pageResultVo = spuService.queryPage(paramVo);
+
+        return ResponseVo.ok((List<SpuEntity>)pageResultVo.getList());
+    }
+
+
     /**
      * 列表
      */
@@ -69,7 +78,7 @@ public class SpuController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody SpuVo spu){
+    public ResponseVo<Object> save(@RequestBody SpuVo spu) throws FileNotFoundException {
 		this.spuService.bigSave(spu);
 
         return ResponseVo.ok();
